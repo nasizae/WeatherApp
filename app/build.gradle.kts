@@ -73,4 +73,10 @@ dependencies {
     //pager
     implementation("com.google.accompanist:accompanist-pager:0.19.0")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.19.0")
+
+    //Volley
+    implementation ("com.android.volley:volley:1.2.1")
+    // For Json representation
+    implementation ("com.google.code.gson:gson:2.10")
+
 }
