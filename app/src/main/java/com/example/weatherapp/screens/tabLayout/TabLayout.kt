@@ -1,4 +1,4 @@
-package com.example.screens.tabLayout
+package com.example.weatherapp.screens.tabLayout
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,14 +12,15 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.data.WeatherModel
-import com.example.screens.list.ListItem
+import com.example.weatherapp.data.WeatherModel
+import com.example.weatherapp.screens.list.ListItem
 import com.example.weatherapp.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -28,9 +29,8 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
-@Preview(showSystemUi = true)
 @Composable
-fun TabLayout() {
+fun TabLayout(daysList:MutableState<List<WeatherModel>>) {
     val tabList = listOf("Hours", "Days")
     val pagerState = rememberPagerState()
     val tabIndexedValue = pagerState.currentPage
@@ -73,11 +73,11 @@ fun TabLayout() {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-//                itemsIndexed(
-//                    listOf()
-//                ) { index, item ->
-//                    ListItem(item = item)
-//                }
+                itemsIndexed(
+                daysList.value
+                ) { _, item ->
+                    ListItem(item = item)
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.screens.mainCard
+package com.example.weatherapp.screens.mainCard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,10 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weatherapp.R
+import com.example.weatherapp.data.WeatherModel
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 
 @Composable
-fun MainCard() {
+fun MainCard(currentDay: MutableState<WeatherModel>) {
+    val minTemp = currentDay.value.minTemp
+    val maxTemp = currentDay.value.maxTemp
+    val minMaxTemp =
+        if (minTemp.isNotEmpty() && maxTemp.isNotEmpty()) {
+           "${minTemp.toFloat().toInt()}/${maxTemp.toFloat().toInt()}"
+        } else {
+            "$minTemp/$maxTemp"
+        }
     Column(
         modifier = Modifier
             .padding(6.dp)
@@ -48,30 +58,30 @@ fun MainCard() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "04.08.2024 15:00",
+                        text = currentDay.value.time,
                         fontSize = 16.sp,
                         color = colorResource(id = R.color.white)
                     )
                     AsyncImage(
-                        model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                        model = "https:${currentDay.value.conditionIcon}",
                         contentDescription = null,
                         modifier = Modifier.size(34.dp)
                     )
                 }
                 Text(
-                    text = "BISHKEK",
+                    text = currentDay.value.city,
                     fontSize = 30.sp,
                     color = colorResource(id = R.color.white),
 
-                )
+                    )
                 Text(
-                    text = "35 °C",
+                    text = "${currentDay.value.currentTemp?:null} °C",
                     fontSize = 44.sp,
                     color = colorResource(id = R.color.white),
                     modifier = Modifier.padding(top = 10.dp)
                 )
                 Text(
-                    text = "Partly cloudy",
+                    text = currentDay.value.conditionText,
                     color = colorResource(id = R.color.white),
                     modifier = Modifier.padding(top = 10.dp)
                 )
@@ -87,7 +97,7 @@ fun MainCard() {
                         )
                     }
                     Text(
-                        text = "23/9",
+                        text = "$minMaxTemp °C",
                         color = colorResource(id = R.color.white),
                         modifier = Modifier.padding(top = 10.dp)
                     )
@@ -104,10 +114,3 @@ fun MainCard() {
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewMainScreen() {
-    WeatherAppTheme {
-        MainCard()
-    }
-}

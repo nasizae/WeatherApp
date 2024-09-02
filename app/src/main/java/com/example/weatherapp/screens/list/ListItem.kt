@@ -1,4 +1,4 @@
-package com.example.screens.list
+package com.example.weatherapp.screens.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.data.WeatherModel
+import com.example.weatherapp.data.WeatherModel
 import com.example.weatherapp.R
 
 @Composable
@@ -48,7 +48,7 @@ fun ListItem(item: WeatherModel) {
                 )
             }
             Text(
-                text = item.currentTemp.ifEmpty { "${item.maxTemp}/${item.minTemp}" },
+                text = item.currentTemp.ifEmpty { "${item.maxTemp}/${item.minTemp}°C" },
                 color = colorResource(id = R.color.white)
             )
             AsyncImage(
